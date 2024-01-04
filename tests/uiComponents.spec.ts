@@ -174,5 +174,29 @@ test('Date Pickers', async ({page}) => {
     const currentYear = moment().format('YYYY')
 
     await page.locator('[class="day-cell ng-star-inserted"]').getByText('1', {exact: true}).click()
-    await expect(dateField).toHaveValue(`${currentMonthAbbreviation} 1, ${currentYear}`)
+    await expect(dateField).toHaveValue(`${currentMonthAbbreviation} 1, ${currentYear}`)    
+})
+
+test('Sliders', async ({page}) => {
+    // Update attributes
+    const tempGauge = page.locator('[tabtitle="Temperature"] ngx-temperature-dragger circle')
+    // await tempGauge.evaluate ( node => {
+    //     node.setAttribute('cx', '232.630')
+    //     node.setAttribute('cy', '232.630')
+    // })
+    // await tempGauge.click()
+
+    // Mouse movement
+    const tempBox = page.locator('[tabtitle="Temperature"] ngx-temperature-dragger')
+    await tempBox.scrollIntoViewIfNeeded()
+
+    const box = await tempGauge.boundingBox()
+    const x = box.x + box.width / 2
+    const y = box.y + box.height / 2
+    await page.mouse.move(x, y)
+    await page.mouse.down()
+    await page.mouse.move(x+200, y+350)
+    await page.mouse.up()
+
+    await expect(tempBox).toContainText('30')
 })
