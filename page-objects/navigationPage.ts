@@ -1,12 +1,7 @@
 import { Page } from '@playwright/test'
+import { HelperBase } from './helperBase'
 
-export class  NavigationPage {
-
-    readonly page: Page
-
-    constructor(page: Page) {
-        this.page = page
-    }
+export class  NavigationPage extends HelperBase {
 
     async formLayoutsPage() {
         await this.selectGroupMenuItem('Forms')
