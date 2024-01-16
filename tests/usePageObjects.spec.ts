@@ -2,6 +2,7 @@ import { test, expect } from '@playwright/test'
 import { DatePickerPage } from '../page-objects/datePickerPage'
 import { NavigationPage } from '../page-objects/navigationPage'
 import { FormLayoutPage } from '../page-objects/formLayoutsPage'
+import { PageManager } from '../page-objects/pageManager'
 
 test.beforeEach(async({page}) => {
     await page.goto('http://localhost:4200')
@@ -28,4 +29,16 @@ test('Parameterized methods', async ({page}) => {
     await navigateTo.datePickerPage()
     await datePickerPage.selectCommonDatePickerDateFromToday(10)
     await datePickerPage.selectRangedDatePickerFromToday(1, 5)
+})
+
+test('Parameterized methods w/ Page Manager', async ({page}) => {
+    const pm = new PageManager(page)
+
+    await pm.navigateTo().formLayoutsPage()
+    await pm.onFormLayoutPage().submitUsingGridFormWithCredsAndSelectOption('test@test.com', 'password', 'Option 2')
+    await pm.onFormLayoutPage().submitInlineFormWithNameEmailAndCheckbox('mike', 'iammikec@gmail.com', true)
+
+    await pm.navigateTo().datePickerPage()
+    await pm.onDatePickerPage().selectCommonDatePickerDateFromToday(10)
+    await pm.onDatePickerPage().selectRangedDatePickerFromToday(1, 5)
 })
