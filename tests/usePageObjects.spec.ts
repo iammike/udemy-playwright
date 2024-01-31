@@ -27,8 +27,8 @@ test('Parameterized methods', async ({page}) => {
     await formLayoutsPage.submitInlineFormWithNameEmailAndCheckbox('mike', 'iammikec@gmail.com', true)
 
     await navigateTo.datePickerPage()
-    await datePickerPage.selectCommonDatePickerDateFromToday(10)
-    await datePickerPage.selectRangedDatePickerFromToday(1, 5)
+    await datePickerPage.selectCommonDatePickerDateFromToday(-1)
+    await datePickerPage.selectRangedDatePickerFromToday(-10, -5)
 })
 
 test('Parameterized methods w/ Page Manager', async ({page}) => {
@@ -39,6 +39,6 @@ test('Parameterized methods w/ Page Manager', async ({page}) => {
     await pm.onFormLayoutPage().submitInlineFormWithNameEmailAndCheckbox('mike', 'iammikec@gmail.com', true)
 
     await pm.navigateTo().datePickerPage()
-    await pm.onDatePickerPage().selectCommonDatePickerDateFromToday(10)
-    await pm.onDatePickerPage().selectRangedDatePickerFromToday(1, 5)
+    await pm.onDatePickerPage().selectCommonDatePickerDateFromToday(-1)
+    await pm.onDatePickerPage().selectRangedDatePickerFromToday(-5, -1)
 })
