@@ -1,4 +1,6 @@
 import { test, expect } from '@playwright/test'
+import { faker } from '@faker-js/faker'
+
 import { DatePickerPage } from '../page-objects/datePickerPage'
 import { NavigationPage } from '../page-objects/navigationPage'
 import { FormLayoutPage } from '../page-objects/formLayoutsPage'
@@ -33,12 +35,15 @@ test('Parameterized methods', async ({page}) => {
 
 test('Parameterized methods w/ Page Manager', async ({page}) => {
     const pm = new PageManager(page)
+    const fakePerson = faker.person
+    const fakeFemaleFullName = faker.person.fullName({})
+    const fakeEmail = `${fakeFemaleFullName}${faker.number.int(1000)}@${faker.internet.domainName()}`.replace(/[' ]/g, "")
 
     await pm.navigateTo().formLayoutsPage()
     await pm.onFormLayoutPage().submitUsingGridFormWithCredsAndSelectOption('test@test.com', 'password', 'Option 2')
-    await pm.onFormLayoutPage().submitInlineFormWithNameEmailAndCheckbox('mike', 'iammikec@gmail.com', true)
+    await pm.onFormLayoutPage().submitInlineFormWithNameEmailAndCheckbox(fakeFemaleFullName, fakeEmail, true)
 
     await pm.navigateTo().datePickerPage()
-    await pm.onDatePickerPage().selectCommonDatePickerDateFromToday(-1)
-    await pm.onDatePickerPage().selectRangedDatePickerFromToday(-5, -1)
+    await pm.onDatePickerPage().selectCommonDatePickerDateFromToday(1)
+    await pm.onDatePickerPage().selectRangedDatePickerFromToday(1, 5)
 })

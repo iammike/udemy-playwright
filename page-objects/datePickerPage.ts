@@ -43,7 +43,7 @@ export class DatePickerPage {
             await this.page.locator('nb-calendar-pageable-navigation [date-name="chevron-right"]').click()
             calendarMonthAndYear = await this.page.locator('nb-calendar-view-mode').textContent()
         }
-        await this.page.locator('.day-cell.ng-star-inserted').getByText(expectedDate, {exact: true}).click()
+        await this.page.locator('.day-cell.ng-star-inserted').getByText(expectedDate, {exact: true}).first().click()
 
         return dateToAssert
     }
